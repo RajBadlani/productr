@@ -17,7 +17,7 @@ const contentByStatus = {
   },
 } as const
 
-const gridClass = 'grid grid-cols-3 gap-[24px] overflow-y-auto px-[34px] py-[34px]'
+const gridClass = 'grid grid-cols-1 gap-4 overflow-y-auto px-4 py-4 sm:grid-cols-2 sm:px-5 md:gap-5 md:px-6 md:py-6 xl:grid-cols-3 xl:px-[34px] xl:py-[34px]'
 
 const HomeSection = () => {
   const [activeStatus, setActiveStatus] = useState<ProductStatus>('published')

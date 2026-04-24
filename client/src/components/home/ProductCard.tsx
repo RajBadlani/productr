@@ -12,12 +12,12 @@ type ProductCardProps = {
 }
 
 const cardClass =
-  'w-[330px] rounded-[16px] border border-[#E5E7EB] bg-white p-[14px] shadow-[0_4px_14px_rgba(15,23,42,0.12)]'
+  'w-full rounded-[16px] border border-[#E5E7EB] bg-white p-[14px] shadow-[0_4px_14px_rgba(15,23,42,0.12)]'
 const imageFrameClass =
-  'flex h-[178px] items-center justify-center overflow-hidden rounded-[8px] border border-[#E5E7EB] bg-[#F8FAFC]'
-const detailRowClass = 'flex items-center justify-between gap-4 text-[14px] leading-[20px]'
+  'flex h-[178px] items-center justify-center overflow-hidden rounded-[8px] border border-[#E5E7EB] bg-[#F8FAFC] sm:h-[198px]'
+const detailRowClass = 'flex items-start justify-between gap-4 text-[13px] leading-[20px] sm:items-center sm:text-[14px]'
 const detailLabelClass = 'text-[#98A2B3]'
-const detailValueClass = 'text-right font-medium text-[#475467]'
+const detailValueClass = 'max-w-[45%] text-right font-medium text-[#475467] break-words sm:max-w-[50%]'
 const actionButtonClass =
   'flex h-[36px] cursor-pointer items-center justify-center rounded-[8px] text-[14px] font-semibold leading-[20px]'
 
@@ -107,7 +107,7 @@ const ProductCard = ({ product, onDelete, onEdit, onTogglePublish }: ProductCard
         </p>
       </section>
 
-      <section className="mt-[18px] grid grid-cols-[1fr_1fr_40px] gap-[10px]">
+      <section className="mt-[18px] grid grid-cols-1 gap-[10px] sm:grid-cols-[1fr_1fr_40px]">
         <button
           type="button"
           onClick={() => onTogglePublish(product)}
@@ -127,7 +127,7 @@ const ProductCard = ({ product, onDelete, onEdit, onTogglePublish }: ProductCard
         <button
           type="button"
           onClick={() => onDelete(product._id)}
-          className="flex h-[36px] cursor-pointer items-center justify-center rounded-[8px] border border-[#D0D5DD] bg-white text-[#98A2B3]"
+          className="flex h-[36px] cursor-pointer items-center justify-center rounded-[8px] border border-[#D0D5DD] bg-white text-[#98A2B3] sm:w-[40px]"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path

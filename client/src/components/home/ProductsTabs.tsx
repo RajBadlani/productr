@@ -11,7 +11,7 @@ const inactiveTabClass = 'text-[#D1D5DB]'
 
 const ProductsTabs = ({ activeStatus, onStatusChange }: ProductsTabsProps) => {
   return (
-    <nav className="border-b border-[#E5E7EB] px-[14px] pt-[11px]">
+    <nav className="border-b border-[#E5E7EB] px-4 pt-[11px] md:px-[14px]">
       <ul className="flex gap-[18px] font-semibold leading-[14px]">
         <li>
           <button

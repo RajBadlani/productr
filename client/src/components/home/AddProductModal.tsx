@@ -170,9 +170,9 @@ const AddProductModal = ({
 
   return (
     <section className="fixed inset-0 z-50 bg-[rgba(116,126,150,0.55)]">
-      <section className="flex h-full items-center justify-center pl-[240px] py-[20px]">
-        <section className="w-[424px] overflow-hidden rounded-[8px] bg-white shadow-[0_10px_30px_rgba(15,23,42,0.12)]">
-          <header className="flex h-[44px] items-center justify-between border-b border-[#E5E7EB] px-[22px]">
+      <section className="flex h-full items-center justify-center p-3 md:pl-[240px] md:py-[20px] md:pr-4">
+        <section className="max-h-[calc(100vh-24px)] w-full max-w-[424px] overflow-y-auto rounded-[8px] bg-white shadow-[0_10px_30px_rgba(15,23,42,0.12)] md:max-h-[calc(100vh-40px)]">
+          <header className="sticky top-0 z-10 flex h-[44px] items-center justify-between border-b border-[#E5E7EB] bg-white px-4 md:px-[22px]">
             <span className="text-[16px] font-semibold leading-[22px] text-black">
               {isEditMode ? 'Edit Product' : 'Add Product'}
             </span>
@@ -188,7 +188,7 @@ const AddProductModal = ({
 
           <form
             onSubmit={handleSubmit}
-            className="px-[22px] py-[14px]"
+            className="px-4 py-[14px] md:px-[22px]"
             onClick={closeMenus}
           >
             <ProductFormField
@@ -295,7 +295,7 @@ const AddProductModal = ({
               />
             </section>
 
-            <footer className="mx-[-22px] mb-[-14px] mt-[12px] flex h-[48px] justify-end border-t border-[#E5E7EB] bg-[#F8FAFC] px-[22px] py-[7px]">
+            <footer className="sticky bottom-0 mx-[-16px] mb-[-14px] mt-[12px] flex h-[56px] justify-end border-t border-[#E5E7EB] bg-[#F8FAFC] px-4 py-[10px] md:mx-[-22px] md:h-[48px] md:px-[22px] md:py-[7px]">
               <button type="submit" disabled={isLoading} className={submitButtonClass}>
                 {isLoading ? '...' : isEditMode ? 'Update' : 'Create'}
               </button>

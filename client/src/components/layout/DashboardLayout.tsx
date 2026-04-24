@@ -10,7 +10,7 @@ type DashboardLayoutProps = {
 
 const DashboardLayout = ({ activeSection, children }: DashboardLayoutProps) => {
   return (
-    <main className="flex h-screen w-screen overflow-hidden bg-white">
+    <main className="flex min-h-screen w-full flex-col overflow-hidden bg-white md:h-screen md:w-screen md:flex-row">
       <Sidebar activeSection={activeSection} />
 
       <section className="flex min-w-0 flex-1 flex-col bg-white">
