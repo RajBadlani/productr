@@ -1,5 +1,7 @@
 import type { ChangeEvent } from 'react'
 
+const acceptedImageTypes = '.png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp'
+
 export type PreviewImage = {
   id: string
   src: string
@@ -33,12 +35,15 @@ const ProductImageUploader = ({
             key={fileInputKey}
             multiple
             type="file"
-            accept="image/*"
+            accept={acceptedImageTypes}
             onChange={onImagesChange}
             className="hidden"
           />
         </label>
       </section>
+      <p className="mt-[3px] text-[10px] text-[#98A2B3]">
+        Upload PNG, JPG, JPEG, or WEBP images.
+      </p>
 
       <section
         className={`mt-[5px] flex min-h-[44px] w-full items-center gap-[7px] rounded-[7px] border border-dashed p-[6px] ${
@@ -73,7 +78,7 @@ const ProductImageUploader = ({
               key={fileInputKey}
               multiple
               type="file"
-              accept="image/*"
+              accept={acceptedImageTypes}
               onChange={onImagesChange}
               className="hidden"
             />

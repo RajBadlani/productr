@@ -5,15 +5,28 @@ import { protect } from '../middleware/auth.js'
 
 const productRoutes = express.Router()
 
+const uploadProductFiles = (req, res, next) => {
+  upload.array('images', 5)(req, res, (error) => {
+    if (!error) {
+      next()
+      return
+    }
+
+    const statusCode = error.statusCode || (error.name === 'MulterError' ? 400 : 500)
+    const message = error.message || 'Failed to upload product images'
+    res.status(statusCode).json({ message })
+  })
+}
+
 productRoutes.use(protect)
 
-productRoutes.post('/', upload.array('images', 5), createProduct)
+productRoutes.post('/', uploadProductFiles, createProduct)
 productRoutes.get('/', getProducts)
 productRoutes.get('/:id', getProduct)
-productRoutes.put('/:id', upload.array('images', 5), updateProduct)
+productRoutes.put('/:id', uploadProductFiles, updateProduct)
 productRoutes.delete('/:id', deleteProduct)
 
-productRoutes.post('/:id/images', upload.array('images', 5), uploadProductImages)
+productRoutes.post('/:id/images', uploadProductFiles, uploadProductImages)
 
 
 export default productRoutes

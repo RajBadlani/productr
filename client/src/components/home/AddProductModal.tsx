@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
+import axios from 'axios'
 import { createProduct, updateProduct } from '../../api/products'
 import type { Product, ProductFormData, ProductImage } from '../../types/product'
 import ProductDropdown from './product-form/ProductDropdown'
@@ -29,6 +30,9 @@ const eligibilityOptions = ['Yes', 'No'] as const
 const fieldSpacingClass = 'mt-[9px]'
 const submitButtonClass =
   'flex h-[34px] w-[64px] cursor-pointer items-center justify-center rounded-[7px] bg-[#2334F3] text-[12px] font-semibold leading-[16px] text-white disabled:cursor-not-allowed disabled:opacity-70'
+const allowedImageMimeTypes = ['image/png', 'image/jpeg', 'image/webp']
+const unsupportedImageMessage =
+  'SVG files are not supported. Please upload a PNG, JPG, JPEG, or WEBP image.'
 
 const getImageUrl = (image: ProductImage) => {
   if (typeof image === 'string') return image
@@ -39,6 +43,14 @@ const getInitialImages = (product?: Product): PreviewImage[] => {
   return (product?.images || [])
     .map((image, index) => ({ id: `existing-${index}`, src: getImageUrl(image) }))
     .filter((image) => image.src)
+}
+
+const getRequestErrorMessage = (error: unknown) => {
+  if (axios.isAxiosError(error)) {
+    return error.response?.data?.message || error.message
+  }
+
+  return error instanceof Error ? error.message : 'Something went wrong. Please try again.'
 }
 
 const AddProductModal = ({
@@ -89,6 +101,16 @@ const AddProductModal = ({
   const handleImagesChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(event.target.files || [])
     if (selectedFiles.length === 0) return
+
+    const hasUnsupportedFile = selectedFiles.some(
+      (file) => !allowedImageMimeTypes.includes(file.type),
+    )
+
+    if (hasUnsupportedFile) {
+      setErrors((prev) => ({ ...prev, images: unsupportedImageMessage }))
+      setFileInputKey((prev) => prev + 1)
+      return
+    }
 
     const nextImages = selectedFiles.map((file) => ({
       id: `${file.name}-${file.lastModified}-${crypto.randomUUID()}`,
@@ -160,9 +182,8 @@ const AddProductModal = ({
       onSaved?.()
       onClose()
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : 'Something went wrong. Please try again.'
-      setErrors({ name: message })
+      const message = getRequestErrorMessage(error)
+      setErrors((prev) => ({ ...prev, images: message }))
     } finally {
       setIsLoading(false)
     }

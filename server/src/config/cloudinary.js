@@ -5,6 +5,10 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+const allowedImageMimeTypes = ['image/png', 'image/jpeg', 'image/webp']
+const unsupportedImageMessage =
+  'Please upload a PNG, JPG, JPEG, or WEBP image. SVG files are not supported.'
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -19,5 +23,19 @@ const storage = new CloudinaryStorage({
   }),
 })
 
-export const upload = multer({ storage })
+export const upload = multer({
+  storage,
+  fileFilter: (req, file, callback) => {
+    if (allowedImageMimeTypes.includes(file.mimetype)) {
+      callback(null, true)
+      return
+    }
+
+    const error = new Error(unsupportedImageMessage)
+    error.statusCode = 400
+    callback(error)
+  },
+})
+
+export { unsupportedImageMessage }
 export default cloudinary
